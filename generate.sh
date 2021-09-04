@@ -1,17 +1,12 @@
 #!/bin/sh
-
 NC="\e[39m"
 RED="\e[31m"
 GREEN="\e[32m"
 YELLOW="\e[93m"
 CYAN="\e[96m"
-
 ENV_CHECK="true"
-
 SALTS_LEN="32"
-
 TAB_PREFIX="wp_"
-
 PWD=$(pwd)
 
 setEnvCheck ()
@@ -53,7 +48,7 @@ fi
 
 if [ -z "$TABLE_PREFIX" ]
 then
-	echo "[$CYAN INFO $NC] TABLE_PREFIX: Using default value. (${TAB_PREFIX})"
+	echo "[$CYAN INFO $NC] TABLE_PREFIX: Using default value. ($TAB_PREFIX)"
 else
 	TAB_PREFIX=$TABLE_PREFIX
 	echo "[$GREEN OK $NC] TABLE_PREFIX"
@@ -61,7 +56,7 @@ fi
 
 if [ -z "$SALTS_SIZE" ]
 then
-	echo "[$CYAN INFO $NC] SALTS_SIZE: Using default value. (${SALTS_LEN})"
+	echo "[$CYAN INFO $NC] SALTS_SIZE: Using default value. ($SALTS_LEN)"
 else
 	if [ "$SALTS_SIZE" -lt "30" ]
 	then

@@ -1,7 +1,7 @@
 # wp-config-generator
 A simple Wordpress config generator using environment variables.
 
-# Usage
+## Usage
 The script will need a few environement variables to be able to generate your config file.
 - DB_NAME
 - DB_USER
@@ -21,3 +21,8 @@ Also it will fill all needed Salts/Keys values automatically, using **openssl** 
 - SECURE_AUTH_SALT
 - LOGGED_IN_SALT
 - NONCE_SALT
+
+### Screenshots
+
+![Success](https://github.com/romslf/wp-config-generator/Capture-Success.PNG)
+![Fail](https://github.com/romslf/wp-config-generator/Capture-Fail.PNG)
