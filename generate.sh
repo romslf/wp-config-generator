@@ -4,21 +4,13 @@ NC="\e[39m"
 RED="\e[31m"
 GREEN="\e[32m"
 YELLOW="\e[93m"
+CYAN="\e[96m"
 
 ENV_CHECK="true"
 
-SEED_LEN="32"
+SALTS_LEN="32"
 
-AUTH_KEY=$(openssl rand -base64 $SEED_LEN)
-SECURE_AUTH_KEY=$(openssl rand -base64 $SEED_LEN)
-LOGGED_IN_KEY=$(openssl rand -base64 $SEED_LEN)
-NONCE_KEY=$(openssl rand -base64 $SEED_LEN)
-AUTH_SALT=$(openssl rand -base64 $SEED_LEN)
-SECURE_AUTH_SALT=$(openssl rand -base64 $SEED_LEN)
-LOGGED_IN_SALT=$(openssl rand -base64 $SEED_LEN)
-NONCE_SALT=$(openssl rand -base64 $SEED_LEN)
-
-TAB_PREFIX=""
+TAB_PREFIX="wp_"
 
 PWD=$(pwd)
 
@@ -61,12 +53,33 @@ fi
 
 if [ -z "$TABLE_PREFIX" ]
 then
-	TAB_PREFIX="wp_"
-	echo "[$YELLOW Warning $NC] TABLE_PREFIX: Using default value. ('wp_')"
+	echo "[$CYAN INFO $NC] TABLE_PREFIX: Using default value. (${TAB_PREFIX})"
 else
 	TAB_PREFIX=$TABLE_PREFIX
 	echo "[$GREEN OK $NC] TABLE_PREFIX"
 fi
+
+if [ -z "$SALTS_SIZE" ]
+then
+	echo "[$CYAN INFO $NC] SALTS_SIZE: Using default value. (${SALTS_LEN})"
+else
+	if [ "$SALTS_SIZE" -lt "30" ]
+	then
+		echo "[$RED ERROR $NC] SALTS_SIZE should be greater than 30."
+		exit 1
+	fi
+	SALTS_LEN=$SALTS_SIZE
+	echo "[$GREEN OK $NC] SALTS_SIZE"
+fi
+
+AUTH_KEY=$(openssl rand -base64 $SALTS_LEN)
+SECURE_AUTH_KEY=$(openssl rand -base64 $SALTS_LEN)
+LOGGED_IN_KEY=$(openssl rand -base64 $SALTS_LEN)
+NONCE_KEY=$(openssl rand -base64 $SALTS_LEN)
+AUTH_SALT=$(openssl rand -base64 $SALTS_LEN)
+SECURE_AUTH_SALT=$(openssl rand -base64 $SALTS_LEN)
+LOGGED_IN_SALT=$(openssl rand -base64 $SALTS_LEN)
+NONCE_SALT=$(openssl rand -base64 $SALTS_LEN)
 
 if [ "$ENV_CHECK" = "true" ]
 then
