@@ -24,5 +24,5 @@ Also it will fill all needed Salts/Keys values automatically, using **openssl** 
 
 ### Screenshots
 
-![Success](https://github.com/romslf/wp-config-generator/Capture-Success.PNG)
-![Fail](https://github.com/romslf/wp-config-generator/Capture-Fail.PNG)
+![Success](https://github.com/romslf/wp-config-generator/blob/main/Capture-Success.PNG?raw=true)
+![Fail](https://github.com/romslf/wp-config-generator/blob/main/Capture-Fail.PNG?raw=true)
