@@ -1,5 +1,5 @@
 # wp-config-generator
-A simple Wordpress config generator using environment variables.
+A simple Wordpress config generator (wp-config.php) using environment variables.
 
 ## Usage
 The script will need a few environement variables to be able to generate your config file.
