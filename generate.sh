@@ -162,5 +162,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 /** Sets up WordPress vars and included files. */
 require_once ABSPATH . 'wp-settings.php';" > wp-config.php
 else
-	echo $RED"Please fix below errors before running me again."
+	echo $RED"Please fix above errors before running me again."
 fi
