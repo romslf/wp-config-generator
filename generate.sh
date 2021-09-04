@@ -1,16 +1,18 @@
 #!/bin/sh
+
 NC="\e[39m"
 RED="\e[31m"
 GREEN="\e[32m"
 YELLOW="\e[93m"
 CYAN="\e[96m"
+DIR="."
 SETUP_CHECK="true"
-SALTS_LEN="32"
+SALTS_LEN="64"
 TAB_PREFIX="wp_"
 PWD=$(pwd)
 
 needCommand () {
-	if command -v $1 >> /dev/null
+	if [ -x "$(command -v "$1")"  ]
 	then
 		echo "[$GREEN OK $NC] $1"
 	else
@@ -47,23 +49,34 @@ if [ -z "$SALTS_SIZE" ]
 then
 	echo "[$CYAN INFO $NC] SALTS_SIZE: Using default value. ($SALTS_LEN)"
 else
-	if [ "$SALTS_SIZE" -lt "30" ]
+	if [ "$SALTS_SIZE" -lt "64" ]
 	then
-		echo "[$RED ERROR $NC] SALTS_SIZE should be greater than 30."
-		exit 1
+		echo "[$RED ERROR $NC] SALTS_SIZE should be equal or greater than "$SALTS_LEN"."
+		SETUP_CHECK="false"
+	else 
+		SALTS_LEN=$SALTS_SIZE
+		echo "[$GREEN OK $NC] SALTS_SIZE"
 	fi
-	SALTS_LEN=$SALTS_SIZE
-	echo "[$GREEN OK $NC] SALTS_SIZE"
 fi
 
-AUTH_KEY=$(openssl rand -base64 $SALTS_LEN)
-SECURE_AUTH_KEY=$(openssl rand -base64 $SALTS_LEN)
-LOGGED_IN_KEY=$(openssl rand -base64 $SALTS_LEN)
-NONCE_KEY=$(openssl rand -base64 $SALTS_LEN)
-AUTH_SALT=$(openssl rand -base64 $SALTS_LEN)
-SECURE_AUTH_SALT=$(openssl rand -base64 $SALTS_LEN)
-LOGGED_IN_SALT=$(openssl rand -base64 $SALTS_LEN)
-NONCE_SALT=$(openssl rand -base64 $SALTS_LEN)
+if [ "$1" != "" ]
+then
+	if [ -d "$1" ]
+	then
+		DIR="$1"
+	else
+		echo "[$YELLOW WARNING $NC] Path provided ("$1") doesn't exist (Using "$DIR")"
+	fi
+fi
+
+AUTH_KEY="$(openssl rand -base64 "$SALTS_LEN")"
+SECURE_AUTH_KEY="$(openssl rand -base64 "$SALTS_LEN")"
+LOGGED_IN_KEY="$(openssl rand -base64 "$SALTS_LEN")"
+NONCE_KEY="$(openssl rand -base64 "$SALTS_LEN")"
+AUTH_SALT="$(openssl rand -base64 "$SALTS_LEN")"
+SECURE_AUTH_SALT="$(openssl rand -base64 "$SALTS_LEN")"
+LOGGED_IN_SALT="$(openssl rand -base64 "$SALTS_LEN")"
+NONCE_SALT="$(openssl rand -base64 "$SALTS_LEN")"
 
 if [ "$SETUP_CHECK" = "true" ]
 then
@@ -148,7 +161,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /** Sets up WordPress vars and included files. */
-require_once ABSPATH . 'wp-settings.php';" > wp-config.php && echo $GREEN"Config generated. (Here: $PWD/wp-config.php)"
+require_once ABSPATH . 'wp-settings.php';" > "$DIR"/wp-config.php && echo "$GREEN""Config generated. (Here: "$DIR"/wp-config.php)"
 else
-	echo $RED"Please fix above errors before running me again."
+	echo "$RED""Please fix above errors before running me again."
 fi
