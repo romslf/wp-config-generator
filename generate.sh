@@ -11,6 +11,11 @@ SALTS_LEN="64"
 TAB_PREFIX="wp_"
 PWD=$(pwd)
 
+echo () {
+	IFS=" "
+	printf "%b\n"  "$*"
+}
+
 needCommand () {
 	if [ -x "$(command -v "$1")"  ]
 	then
