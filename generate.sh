@@ -169,4 +169,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once ABSPATH . 'wp-settings.php';" > "$DIR"/wp-config.php && echo "$GREEN""Config generated. (Here: "$DIR"/wp-config.php)"
 else
 	echo "$RED""Please fix above errors before running me again."
+	exit 1
 fi
